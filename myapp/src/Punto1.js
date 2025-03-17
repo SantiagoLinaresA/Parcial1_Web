@@ -1,55 +1,53 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import headerImage from "./imagenes/robo1.png";
-
-
 
 const Punto1 = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Hook para redirección
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3001/api/login", {  
+      const response = await fetch("http://localhost:3001/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ login: username, password }),
       });
 
       const data = await response.json();
-      
-      if (response.ok) {
-        alert("Inicio de sesión exitoso");  
-        localStorage.setItem("token", data.token); 
+
+      if (response.status === 200) {
+        // Autenticación exitosa, redirigir a Punto2.js
+        navigate("/punto2");
       } else {
-        setError(data.message || "Error en la autenticación");
+        // Mostrar mensaje de error si las credenciales son incorrectas
+        setError(data.message);
       }
     } catch (error) {
-      setError("Error de conexión con el servidor");
+      setError("Error de conexión con el servidor.");
     }
   };
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow p-4" style={{ width: "800px" }}>
-        <div className="text-center position-relative">
-          <h2 className="position-absolute w-100 text-white fw-bold" style={{ top: "20%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 1 }}>
-            Adopta un Robot con Robot Lovers!
-          </h2>
-          <img
-            src={headerImage} 
-            alt="Adopta un Robot con Robot Lovers!"
-            className="img-fluid mb-3"
-          />
+        {/* Encabezado con la imagen y el título */}
+        <div className="text-center">
+          <img src={headerImage} alt="Adopta un Robot" className="img-fluid mb-3" />
+          <h2 className="fw-bold text-dark">Adopta un Robot con Robot Lovers!</h2>
         </div>
+
         <h3 className="text-center">Inicio de sesión</h3>
         {error && <p className="text-danger text-center">{error}</p>}
+
         <form onSubmit={handleLogin}>
           <div className="mb-3">
             <label className="form-label">Nombre de usuario</label>
@@ -59,6 +57,7 @@ const Punto1 = () => {
               placeholder="Ingrese su usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
           <div className="mb-3">
@@ -69,16 +68,25 @@ const Punto1 = () => {
               placeholder="Ingrese su contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
+
           <div className="d-flex justify-content-between">
             <button type="submit" className="btn btn-primary">Ingresar</button>
-            <button type="button" className="btn btn-danger" onClick={() => { setUsername(""); setPassword(""); setError(""); }}>
+            <button 
+              type="button" 
+              className="btn btn-danger"
+              onClick={() => { setUsername(""); setPassword(""); setError(""); }}
+            >
               Cancelar
             </button>
           </div>
         </form>
-        <p className="text-center mt-3 small">Contact us: +57 3102105253 - info@robot-lovers.com - @robot-lovers</p>
+
+        <p className="text-center mt-3 small">
+          Contact us: +57 3102105253 - info@robot-lovers.com - @robot-lovers
+        </p>
       </div>
     </div>
   );
