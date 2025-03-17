@@ -1,0 +1,27 @@
+{
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "model": "Model",
+      "company": "Manufacturer"
+    },
+    "details": {
+      "year": "Year of manufacture",
+      "processing": "Processing capacity",
+      "additional": "Additional features"
+    },
+    "header": "Adopt a Robot with Robot Lovers!",
+        "login": {
+          "title": "Login",
+          "username": "Username",
+          "password": "Password",
+          "loginButton": "Login",
+          "cancelButton": "Cancel"
+        },
+        "contact": "Contact us: +57 3102105253 - info@robot-lovers.com - @robot-lovers"
+    
+}
+
+      
+  
+  

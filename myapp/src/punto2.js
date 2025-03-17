@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import headerImage from "./imagenes/robo1.png";
 
 const Punto2 = () => {
+  const { t } = useTranslation(); // Hook para traducciones
   const [robots, setRobots] = useState([]);
   const [robotSeleccionado, setRobotSeleccionado] = useState(null);
   const [error, setError] = useState("");
@@ -36,7 +38,7 @@ const Punto2 = () => {
 
   return (
     <div className="container mt-4 text-center">
-      <h2 className="fw-bold">Adopta un Robot con Robot Lovers!</h2>
+      <h2 className="fw-bold">{t("header")}</h2>
 
       {/* Imagen de encabezado */}
       <div className="my-3">
@@ -51,10 +53,10 @@ const Punto2 = () => {
           <table className="table table-striped">
             <thead className="table-dark">
               <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Modelo</th>
-                <th>Empresa Fabricante</th>
+                <th>{t("table.id")}</th>
+                <th>{t("table.name")}</th>
+                <th>{t("table.model")}</th>
+                <th>{t("table.company")}</th>
               </tr>
             </thead>
             <tbody>
@@ -87,21 +89,21 @@ const Punto2 = () => {
                   className="img-fluid w-50 mb-3"
                 />
               </div>
-              <p><strong>Modelo:</strong> {robotSeleccionado.modelo}</p>
-              <p><strong>Empresa:</strong> {robotSeleccionado.empresaFabricante}</p>
-              <p><strong>Año de Fabricación:</strong> {robotSeleccionado.añoFabricacion}</p>
-              <p><strong>Procesador:</strong> {robotSeleccionado.capacidadProcesamiento}</p>
-              <p><strong>Descripción:</strong> {robotSeleccionado.humor}</p>
+              <p><strong>{t("table.model")}:</strong> {robotSeleccionado.modelo}</p>
+              <p><strong>{t("table.company")}:</strong> {robotSeleccionado.empresaFabricante}</p>
+              <p><strong>{t("details.year")}:</strong> {robotSeleccionado.añoFabricacion}</p>
+              <p><strong>{t("details.processing")}:</strong> {robotSeleccionado.capacidadProcesamiento}</p>
+              <p><strong>{t("details.additional")}:</strong> {robotSeleccionado.humor}</p>
             </div>
           ) : (
-            <p className="text-muted">Haz clic en un robot para ver los detalles.</p>
+            <p className="text-muted">{t("details.selectRobotMessage", "Haz clic en un robot para ver los detalles.")}</p>
           )}
         </div>
       </div>
 
       {/* Footer */}
       <footer className="text-center mt-3">
-        <p>Contact us: +57 3102105253 - info@robot-lovers.com - @robot-lovers</p>
+        <p>{t("contact")}</p>
       </footer>
     </div>
   );
